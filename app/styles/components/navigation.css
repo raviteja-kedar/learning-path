@@ -1,0 +1,51 @@
+/* Footer */
+.page-footer {
+  text-align: center;
+  padding: 60px 20px 20px;
+  color: var(--secondary-text);
+  font-size: 14px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.footer-link {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Ensure content loaded from other files follows the same width constraints */
+#content-placeholder > * {
+  max-width: 100%;
+}
+
+/* Learn options grid */
+.learn-options {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Back button style */
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: var(--accent-grey);
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--background-color-light);
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: var(--background-color-grey);
+}
+
+.back-button::before {
+  content: '←';
+  font-size: 20px;
+}

@@ -1,0 +1,109 @@
+/* Global CSS Variables */
+:root {
+  --primary-color: #0071e3;
+  --accent-color: #a8d1ff;
+  --accent-yellow: #f1c40f;
+  --accent-green: #2ecc71;
+  --accent-red: #e74c3c;
+
+  --accent-grey: #6c757d;
+  --accent-grey-light: #f8f9fa;
+
+  --text-color: #1d1d1f;
+  --secondary-text: #6e6e73;
+
+  --background-color: #fbfbfd;
+  --background-color-light: #f0f7ff;
+  --background-color-grey: #f2f3f4;
+
+  --card-background: #f9f9f9;
+
+  --border-radius: 12px;
+  --border-color: #ddd;
+
+  --shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+
+  --transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+
+  --glass-background: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --blur-effect: 10px;
+
+  --code-background: #2d2d2d;
+  --code-text-color: #f8f8f2;
+  --content-max-width: 1200px;
+
+  --background-gradient-1: linear-gradient(135deg, #f5f7fa 0%, #e4eaef 100%);
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base Typography */
+body {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 0.5em 0;
+}
+
+.heading-large {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.heading-medium {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.heading-small {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.heading-primary {
+  color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-text);
+}
+
+.subtitle {
+  color: var(--secondary-text);
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #005bbf;
+}

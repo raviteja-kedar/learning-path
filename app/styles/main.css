@@ -1,0 +1,18 @@
+/* Main CSS file - imports all component styles */
+
+/* Base styles and variables */
+@import 'base.css';
+
+/* Component styles */
+@import 'components/layout.css';
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/tables.css';
+@import 'components/code.css';
+@import 'components/backgrounds.css';
+@import 'components/categories.css';
+@import 'components/navigation.css';
+@import 'components/responsive.css';
+
+/* Utility classes */
+@import 'utils.css';

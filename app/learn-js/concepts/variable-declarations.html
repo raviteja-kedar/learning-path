@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Variable Declarations in JavaScript</title>
+    <link rel="stylesheet" href="../../../app/styles.css" />
+  </head>
+  <body>
+    <div class="content">
+      <h1>Variable Declarations in JavaScript</h1>
+
+      <p>
+        JavaScript provides three ways to declare variables: <code>var</code>,
+        <code>let</code>, and <code>const</code>. Each has different scoping and
+        hoisting behavior that affects how and when they can be accessed.
+      </p>
+
+      <h2>var</h2>
+      <p>
+        <code>var</code> is the original way to declare variables in JavaScript.
+        Variables declared with <code>var</code> are function-scoped, meaning
+        they are accessible throughout the function they are defined in.
+      </p>
+
+      <div class="code-example">
+        <pre>
+function example() {
+  var x = 10;
+  if (true) {
+    var x = 20; // Same variable, x is now 20
+    console.log(x); // 20
+  }
+  console.log(x); // 20
+}</pre
+        >
+      </div>
+
+      <div class="note">
+        <strong>Note:</strong> <code>var</code> declarations are hoisted to the
+        top of their scope, but only the declaration, not the initialization.
+        This can lead to unexpected behavior.
+      </div>
+
+      <h2>let</h2>
+      <p>
+        <code>let</code> was introduced in ES6 (2015) and provides block-scoped
+        variables. Variables declared with <code>let</code> are only accessible
+        within the block they are defined in.
+      </p>
+
+      <div class="code-example">
+        <pre>
+function example() {
+  let x = 10;
+  if (true) {
+    let x = 20; // Different variable from the outer x
+    console.log(x); // 20
+  }
+  console.log(x); // 10
+}</pre
+        >
+      </div>
+
+      <h2>const</h2>
+      <p>
+        <code>const</code> was also introduced in ES6 and works like
+        <code>let</code> (block-scoped), but with one important difference:
+        variables declared with <code>const</code> cannot be reassigned after
+        initialization.
+      </p>
+
+      <div class="code-example">
+        <pre>
+function example() {
+  const x = 10;
+  // x = 20; // Error: Assignment to constant variable
+  
+  // However, if x is an object or array, its properties can be modified
+  const user = { name: 'John' };
+  user.name = 'Jane'; // This works
+}</pre
+        >
+      </div>
+
+      <h2>Best Practices</h2>
+      <p>Modern JavaScript favors:</p>
+      <ul style="margin-left: 20px; line-height: 1.6">
+        <li>
+          Using <code>const</code> by default for variables that won't be
+          reassigned
+        </li>
+        <li>Using <code>let</code> for variables that will be reassigned</li>
+        <li>
+          Avoiding <code>var</code> in new code to prevent scope confusion
+        </li>
+      </ul>
+
+      <div class="note">
+        <strong>Remember:</strong> Both <code>let</code> and
+        <code>const</code> have temporal dead zones (TDZ), meaning they can't be
+        accessed before declaration, unlike <code>var</code>.
+      </div>
+    </div>
+  </body>
+</html>

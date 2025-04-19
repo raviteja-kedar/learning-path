@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Execution Model</title>
+    <link rel="stylesheet" href="/JSLearningPath/app/styles.css" />
+    <link
+      rel="stylesheet"
+      href="/JSLearningPath/app/learn-js/how-js-works/execution-model/execution-model.css"
+    />
+  </head>
+  <body>
+    <!-- Placeholder for shared navigation -->
+    <div id="nav-placeholder" class="fixed-nav"></div>
+
+    <h1 class="heading-large heading-primary">JavaScript Execution Model</h1>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">Introduction to JavaScript Execution</h2>
+      <p>
+        JavaScript execution involves several key components that work together
+        to run your code:
+      </p>
+      <ul>
+        <li><strong>Call Stack</strong>: Tracks function calls in your code</li>
+        <li><strong>Event Loop</strong>: Manages asynchronous operations</li>
+        <li>
+          <strong>Callback Queue</strong>: Holds callbacks waiting to be
+          executed
+        </li>
+        <li>
+          <strong>Web APIs</strong>: Provides functionality like timers, AJAX,
+          and DOM manipulation
+        </li>
+      </ul>
+    </div>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">The Call Stack</h2>
+      <p class="mb-2">
+        The Call Stack is a data structure that tracks where we are in the
+        execution of our code. It operates on the Last In, First Out (LIFO)
+        principle.
+      </p>
+
+      <pre>
+function firstFunction() {
+  console.log("I'm the first function");
+  secondFunction();
+}
+
+function secondFunction() {
+  console.log("I'm the second function");
+  thirdFunction();
+}
+
+function thirdFunction() {
+  console.log("I'm the third function");
+}
+
+firstFunction();</pre
+      >
+
+      <div class="note mt-3">
+        <h3 class="heading-small">Call Stack Execution:</h3>
+        <ol class="ml-2">
+          <li>Call Stack begins empty</li>
+          <li>firstFunction() is called and pushed onto the stack</li>
+          <li>
+            Inside firstFunction(), secondFunction() is called and pushed onto
+            the stack
+          </li>
+          <li>
+            Inside secondFunction(), thirdFunction() is called and pushed onto
+            the stack
+          </li>
+          <li>thirdFunction() completes and is popped off the stack</li>
+          <li>
+            Execution returns to secondFunction(), which completes and is popped
+            off
+          </li>
+          <li>
+            Execution returns to firstFunction(), which completes and is popped
+            off
+          </li>
+          <li>Call Stack is empty again</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">The Event Loop</h2>
+      <p class="mb-2">
+        JavaScript is single-threaded, meaning it can only execute one piece of
+        code at a time. The Event Loop allows JavaScript to handle asynchronous
+        operations without blocking the main thread.
+      </p>
+
+      <pre>
+console.log("Start");
+
+setTimeout(function() {
+  console.log("Timeout callback executed");
+}, 2000);
+
+console.log("End");</pre
+      >
+
+      <div class="note mt-3">
+        <h3 class="heading-small">Event Loop Execution:</h3>
+        <ol class="ml-2">
+          <li>"Start" is logged to the console</li>
+          <li>setTimeout() is registered with the Web API</li>
+          <li>"End" is logged to the console</li>
+          <li>After 2 seconds, the callback is moved to the Callback Queue</li>
+          <li>The Event Loop checks if the Call Stack is empty</li>
+          <li>
+            If empty, the callback is moved to the Call Stack and executed
+          </li>
+          <li>"Timeout callback executed" is logged to the console</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">Asynchronous JavaScript</h2>
+      <p>
+        Asynchronous JavaScript allows operations to happen independently of the
+        main program flow, enabling non-blocking behavior. Common asynchronous
+        patterns include:
+      </p>
+
+      <h3 class="heading-small mt-3 mb-2">1. Callbacks</h3>
+      <pre>
+function fetchData(callback) {
+  setTimeout(function() {
+    callback("Data received");
+  }, 2000);
+}
+
+fetchData(function(result) {
+  console.log(result); // "Data received"
+});</pre
+      >
+
+      <h3 class="heading-small mt-3 mb-2">2. Promises</h3>
+      <pre>
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data received");
+    }, 2000);
+  });
+}
+
+fetchData()
+  .then(result => console.log(result))
+  .catch(error => console.error(error));</pre
+      >
+
+      <h3 class="heading-small mt-3 mb-2">3. Async/Await</h3>
+      <pre>
+async function getData() {
+  try {
+    const result = await fetchData();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getData();</pre
+      >
+    </div>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">The JavaScript Runtime</h2>
+      <p>The JavaScript runtime consists of several components:</p>
+      <ul>
+        <li>
+          <strong>JavaScript Engine</strong>: Executes JavaScript code (e.g., V8
+          in Chrome)
+        </li>
+        <li>
+          <strong>Web APIs</strong>: Provided by the browser (DOM, AJAX,
+          setTimeout, etc.)
+        </li>
+        <li><strong>Callback Queue</strong>: Also known as the Task Queue</li>
+        <li>
+          <strong>Microtask Queue</strong>: Higher priority than the Callback
+          Queue (Promise callbacks)
+        </li>
+        <li>
+          <strong>Event Loop</strong>: Orchestrates the execution of tasks and
+          microtasks
+        </li>
+      </ul>
+
+      <div class="note mt-3">
+        <strong>Note:</strong> Promise callbacks are placed in the Microtask
+        Queue, which has priority over the Callback Queue. This means that all
+        microtasks are processed before the next task from the Callback Queue.
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <h2 class="heading-medium">Interactive Visualization</h2>
+      <p class="mb-2">
+        This interactive visualization shows exactly how JavaScript's execution
+        model works with async/await, Promises, and setTimeout.
+      </p>
+      <div class="header-row">
+        <div class="header-description">
+          This visualization demonstrates how JavaScript's execution model works
+          with async/await, Promises, and setTimeout. Follow along step by step
+          to see how code moves through the call stack, Web APIs, callback
+          (macrotask) queue, and microtask queue.
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button
+          id="start-btn"
+          class="secondary-button"
+          onclick="window.startVisualization()"
+        >
+          Start Visualization
+        </button>
+        <button
+          id="next-btn"
+          class="secondary-button"
+          disabled
+          onclick="window.nextStep()"
+        >
+          Next Step
+        </button>
+        <button
+          id="reset-btn"
+          class="secondary-button"
+          disabled
+          onclick="window.resetVisualization()"
+        >
+          Reset
+        </button>
+      </div>
+
+      <div class="explanation-current" id="current-explanation">
+        Click "Start Visualization" to begin
+      </div>
+
+      <div class="visualization-container">
+        <div class="code-container">
+          <pre id="code-display">
+async function async1() {
+  console.log("async1 start");
+  await async2();
+  console.log("async1 end");
+}
+
+async function async2() {
+  console.log("async2");
+}
+
+console.log("script start");
+
+setTimeout(() => {
+  console.log("setTimeout");
+}, 0);
+
+async1();
+
+new Promise((resolve) => {
+  console.log("Promise");
+  resolve();
+}).then(() => {
+  console.log("Promise then");
+});
+
+console.log("script end");</pre
+          >
+        </div>
+
+        <div class="box" id="output">
+          <h3>Console Output</h3>
+          <!-- Console output will be added here dynamically -->
+        </div>
+
+        <div class="boxes-grid">
+          <div class="box" id="call-stack">
+            <h3>Call Stack</h3>
+            <!-- Items will be added here dynamically -->
+          </div>
+
+          <div class="box" id="web-apis">
+            <h3>Web APIs</h3>
+            <!-- Items will be added here dynamically -->
+          </div>
+
+          <div class="box" id="callback-queue">
+            <h3>Callback/Macrotask Queue</h3>
+            <!-- Items will be added here dynamically -->
+          </div>
+
+          <div class="box" id="microtask-queue">
+            <h3>Microtask Queue</h3>
+            <!-- Items will be added here dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script moved here, at the end of body -->
+    <script src="execution-model.js"></script>
+  </body>
+</html>

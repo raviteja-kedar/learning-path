@@ -1,0 +1,26 @@
+<!-- Navigation Bar -->
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="../app.html" class="nav-logo">Learning Path</a>
+    <div class="nav-links">
+      <a href="../app.html">Home</a>
+      <a href="layout.html?content=../learn-js/home.html">JavaScript</a>
+    </div>
+  </div>
+</nav>
+<script>
+  // Update the dashboard link based on the current page location
+  document.addEventListener('DOMContentLoaded', function () {
+    const dashboardLink = document.querySelector('.js-dashboard-link');
+    const pathSegments = window.location.pathname.split('/');
+    const depth =
+      pathSegments.filter((segment) => segment.length > 0).length - 1;
+
+    let path = '';
+    if (depth > 0) {
+      path = '../'.repeat(depth);
+    }
+
+    dashboardLink.href = path + 'dashboard.html';
+  });
+</script>

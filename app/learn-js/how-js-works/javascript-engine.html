@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Engines Explained</title>
+    <link rel="stylesheet" href="../../../styles.css" />
+    <style>
+      /* Arrow head style */
+      .arrow::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: -12px;
+        border-left: 12px solid #333;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        display: block !important;
+      }
+
+      /* Page-specific styles that are unique to this content */
+      .engine-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 20px 0;
+      }
+
+      .engine-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        width: 180px;
+        height: 150px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-width: 180px;
+      }
+
+      .engine-card:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .phase-container {
+        margin: 30px 0;
+      }
+      .phase-box {
+        border-left: 5px solid var(--accent-color);
+        margin-bottom: 20px;
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+      .phase-box:hover {
+        transform: translateY(-5px);
+      }
+      .phase-number {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        background: var(--accent-color);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      #tabs {
+        display: flex;
+        margin-bottom: -1px;
+      }
+      .tab {
+        padding: 10px 20px;
+        background: #f2f2f2;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        margin-right: 5px;
+      }
+      .tab.active {
+        background: white;
+        position: relative;
+      }
+      .tab-content {
+        display: none;
+        padding: 20px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 0 5px 5px 5px;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .lifecycle-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      .lifecycle-table th,
+      .lifecycle-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      .lifecycle-table th {
+        background-color: #f2f2f2;
+      }
+      .emoji-icon {
+        font-size: 1.2em;
+        margin-right: 5px;
+      }
+
+      .metaphor-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .metaphor-icon {
+        flex: 0 0 40px;
+        height: 40px;
+        background: white;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-right: 15px;
+      }
+
+      .metaphor-content {
+        flex: 1;
+      }
+
+      .metaphor-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Placeholder for shared navigation -->
+    <div id="nav-placeholder" class="fixed-nav"></div>
+
+    <div>
+      <!-- Main content starts here -->
+      <h1 class="heading-large heading-primary">JavaScript Engines</h1>
+      <p>
+        JavaScript engines are programs that execute JavaScript code. Different
+        browsers use different engines:
+      </p>
+
+      <div class="engine-container">
+        <div class="card engine-card">
+          <h3>V8</h3>
+          <p>Used by Google Chrome and Node.js</p>
+        </div>
+        <div class="card engine-card">
+          <h3>SpiderMonkey</h3>
+          <p>Used by Firefox</p>
+        </div>
+        <div class="card engine-card">
+          <h3>JavaScriptCore</h3>
+          <p>Used by Safari</p>
+        </div>
+        <div class="card engine-card">
+          <h3>Chakra</h3>
+          <p>Used by older versions of Microsoft Edge</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="heading-medium">How JavaScript Engines Work (Simplified)</h2>
+        <p>
+          Imagine a JavaScript engine as a <em>factory</em> that takes your
+          written code (like a recipe), understands it, and turns it into
+          actions your computer can perform. This process involves several steps
+          and specialized workers (components).
+        </p>
+
+        <div
+          class="static-flow-container"
+          style="
+            margin: 30px 0;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #ddd;
+          "
+        >
+          <h3 style="text-align: center; margin-bottom: 20px">
+            JavaScript Engine Process Flow
+          </h3>
+
+          <div
+            class="flow-row"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Source Code</h4>
+              <div
+                style="
+                  font-family: monospace;
+                  text-align: left;
+                  background: #f5f5f5;
+                  padding: 10px;
+                  border-radius: 3px;
+                "
+              >
+                function greet(name) {<br />
+                &nbsp;&nbsp;return "Hello, " + name;<br />
+                }
+              </div>
+            </div>
+
+            <div class="flow-arrow" style="font-size: 24px; color: #666">→</div>
+
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Parser</h4>
+              <p>Reads and validates syntax</p>
+            </div>
+          </div>
+
+          <div
+            class="flow-row"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Abstract Syntax Tree</h4>
+              <p>Tree representation of code structure</p>
+            </div>
+
+            <div class="flow-arrow" style="font-size: 24px; color: #666">→</div>
+
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Interpreter</h4>
+              <p>Executes code line by line</p>
+            </div>
+          </div>
+
+          <div
+            class="flow-row"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Bytecode</h4>
+              <p>Intermediate representation</p>
+            </div>
+
+            <div class="flow-arrow" style="font-size: 24px; color: #666">→</div>
+
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">JIT Compiler</h4>
+              <p>Optimizes hot code paths</p>
+            </div>
+          </div>
+
+          <div
+            class="flow-row"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">Machine Code</h4>
+              <p>Native instructions for CPU</p>
+            </div>
+
+            <div class="flow-arrow" style="font-size: 24px; color: #666">→</div>
+
+            <div
+              class="flow-box"
+              style="
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 15px;
+                width: 200px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+              "
+            >
+              <h4 style="margin-top: 0">CPU Execution</h4>
+              <p>Final execution by processor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="heading-medium">
+          Visual Metaphor: JavaScript Engine as a Kitchen
+        </h2>
+
+        <div class="metaphor-item">
+          <div class="metaphor-icon">📝</div>
+          <div class="metaphor-content">
+            <div class="metaphor-title">Parser = Recipe Reader</div>
+            <p>
+              Reads the recipe (your code) and writes a step-by-step plan (AST).
+            </p>
+          </div>
+        </div>
+
+        <div class="metaphor-item">
+          <div class="metaphor-icon">👨‍🍳</div>
+          <div class="metaphor-content">
+            <div class="metaphor-title">Interpreter = Line Cook</div>
+            <p>
+              Quickly cooks a basic version of the dish (bytecode execution).
+            </p>
+          </div>
+        </div>
+
+        <div class="metaphor-item">
+          <div class="metaphor-icon">🔍</div>
+          <div class="metaphor-content">
+            <div class="metaphor-title">Profiler = Kitchen Manager</div>
+            <p>Watches which steps you repeat a lot to improve efficiency.</p>
+          </div>
+        </div>
+
+        <div class="metaphor-item">
+          <div class="metaphor-icon">⚡</div>
+          <div class="metaphor-content">
+            <div class="metaphor-title">JIT Compiler = Master Chef</div>
+            <p>
+              Prepares special tools and techniques for the steps you do most,
+              making them faster.
+            </p>
+          </div>
+        </div>
+
+        <div class="metaphor-item">
+          <div class="metaphor-icon">🧹</div>
+          <div class="metaphor-content">
+            <div class="metaphor-title">Garbage Collector = Dishwasher</div>
+            <p>
+              Cleans up the kitchen, throwing away unused ingredients and dirty
+              dishes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <h2 class="heading-medium">How JavaScript Engines Work</h2>
+        <p>
+          JavaScript engines convert your human-readable code into machine code
+          that the computer can actually understand and execute. This process
+          involves several phases:
+        </p>
+      </div>
+
+      <div class="phase-container">
+        <div class="phase-box card">
+          <div class="phase-number">1</div>
+          <h3 class="heading-small">
+            Compilation Phase (a.k.a. Creation Phase / Parsing Phase)
+          </h3>
+          <p class="mb-2">
+            The engine parses your JavaScript code into an Abstract Syntax Tree
+            (AST). JavaScript is not interpreted line-by-line anymore — it's
+            Just-In-Time (JIT) compiled.
+          </p>
+          <p>In this phase:</p>
+          <ul>
+            <li>JS code is parsed into an Abstract Syntax Tree (AST).</li>
+            <li>
+              Variables and function declarations are stored in memory
+              (hoisting).
+            </li>
+            <li>The scope chain is established.</li>
+            <li>No actual execution happens yet.</li>
+          </ul>
+          <div class="key-point">
+            <strong
+              ><span class="emoji-icon">📌</span> Key things that
+              happen:</strong
+            >
+            <ul>
+              <li>Functions are fully hoisted (available entirely).</li>
+              <li>var is hoisted and initialized with undefined.</li>
+              <li>
+                let and const are hoisted but remain in Temporal Dead Zone
+                (TDZ).
+              </li>
+            </ul>
+          </div>
+          <div class="code-example">
+            <code>
+              // Hoisting Example<br />
+              console.log(x); // undefined<br />
+              var x = 10;<br /><br />
+              console.log(y); // ReferenceError<br />
+              let y = 20;<br /><br />
+              // AST Example<br />
+              function add(a, b) {<br />
+              &nbsp;&nbsp;return a + b;<br />
+              }<br /><br />
+              // Becomes an AST (simplified version)<br />
+              {<br />
+              &nbsp;&nbsp;type: "FunctionDeclaration",<br />
+              &nbsp;&nbsp;id: { type: "Identifier", name: "add" },<br />
+              &nbsp;&nbsp;params: [<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;{ type: "Identifier", name: "a" },<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;{ type: "Identifier", name: "b" }<br />
+              &nbsp;&nbsp;],<br />
+              &nbsp;&nbsp;body: {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;type: "BlockStatement",<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;body: [{<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: "ReturnStatement",<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;argument: {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:
+              "BinaryExpression",<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator: "+",<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left: { type:
+              "Identifier", name: "a" },<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right: { type:
+              "Identifier", name: "b" }<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;}]<br />
+              &nbsp;&nbsp;}<br />
+              }
+            </code>
+          </div>
+        </div>
+
+        <div class="phase-box card">
+          <div class="phase-number">2</div>
+          <h3 class="heading-small">Memory Allocation Phase</h3>
+          <p>
+            Technically part of the compilation phase but worth separating
+            mentally.
+          </p>
+          <p>In this step:</p>
+          <ul>
+            <li>JS engine allocates memory for all variables and functions.</li>
+            <li>
+              Memory is reserved in the heap or stack, depending on the type.
+            </li>
+          </ul>
+          <div class="memory-diagram">
+            <h4><span class="emoji-icon">🧠</span> Heap vs. Stack:</h4>
+            <ul>
+              <li>
+                <strong>Stack:</strong> Primitive values (numbers, booleans,
+                etc.)
+              </li>
+              <li>
+                <strong>Heap:</strong> Complex values (objects, arrays,
+                functions)
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase-box card">
+          <div class="phase-number">3</div>
+          <h3 class="heading-small">Compilation & Optimization</h3>
+          <p>
+            Modern JavaScript engines use a combination of compilation and
+            interpretation called Just-In-Time (JIT) compilation:
+          </p>
+          <ul>
+            <li>
+              <strong>Interpreter:</strong> Quickly converts code to bytecode
+              and executes it immediately
+            </li>
+            <li>
+              <strong>Compiler:</strong> Creates optimized machine code for
+              frequently used parts
+            </li>
+          </ul>
+          <div class="key-point">
+            <strong>Key Point:</strong> V8's JIT compiler includes two
+            components:
+            <ul>
+              <li>
+                <strong>Ignition:</strong> A bytecode interpreter that generates
+                and executes bytecode
+              </li>
+              <li>
+                <strong>TurboFan:</strong> An optimizing compiler that produces
+                highly-optimized machine code
+              </li>
+            </ul>
+          </div>
+          <p>
+            JavaScript engines continuously analyze code as it runs and apply
+            various optimization techniques:
+          </p>
+          <ul>
+            <li>
+              <strong>Hidden Classes:</strong> Track object shapes to optimize
+              property access
+            </li>
+            <li>
+              <strong>Inline Caching:</strong> Remember where to find object
+              properties
+            </li>
+            <li>
+              <strong>Function Inlining:</strong> Replace function calls with
+              the function body
+            </li>
+            <li><strong>Dead Code Elimination:</strong> Remove unused code</li>
+          </ul>
+          <div class="memory-diagram">
+            <h4>Hidden Classes Example</h4>
+            <pre>
+// These objects have the same hidden class
+const point1 = {x: 10, y: 20};
+const point2 = {x: 15, y: 25};
+
+// This creates a new hidden class
+const point3 = {y: 30, x: 40}; // Different order
+            </pre>
+          </div>
+        </div>
+
+        <div class="phase-box card">
+          <div class="phase-number">4</div>
+          <h3 class="heading-small">Execution Phase (a.k.a. Runtime Phase)</h3>
+          <p>Now the code is actually run, line by line:</p>
+          <ul class="mb-2">
+            <li>JS assigns values to variables.</li>
+            <li>Functions are invoked.</li>
+            <li>The call stack is used to track what's executing.</li>
+            <li>Closures are formed if needed.</li>
+            <li>
+              The event loop, Web APIs, and queues start playing a role for
+              async code.
+            </li>
+          </ul>
+          <div class="code-example">
+            <code>
+              function greet() {<br />
+              &nbsp;&nbsp;console.log('Hello');<br />
+              }<br />
+              greet(); // Execution happens here<br /><br />
+              // Call Stack Example:<br />
+              function first() {<br />
+              &nbsp;&nbsp;second();<br />
+              }<br /><br />
+              function second() {<br />
+              &nbsp;&nbsp;third();<br />
+              }<br /><br />
+              function third() {<br />
+              &nbsp;&nbsp;console.log('Hello from third function!');<br />
+              }<br /><br />
+              first();<br /><br />
+              // Call Stack Sequence:<br />
+              // 1. first()<br />
+              // 2. first() -> second()<br />
+              // 3. first() -> second() -> third()<br />
+              // 4. first() -> second() -> third() -> console.log()<br />
+              // 5. first() -> second() -> third()<br />
+              // 6. first() -> second()<br />
+              // 7. first()<br />
+              // 8. empty
+            </code>
+          </div>
+          <div class="key-point">
+            <strong>This is also where:</strong>
+            <ul>
+              <li>Errors can be thrown</li>
+              <li>Promises are resolved/rejected</li>
+              <li>Async code gets deferred to queues</li>
+              <li>Scope resolution and closures take effect</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase-box card">
+          <div class="phase-number">5</div>
+          <h3 class="heading-small">Garbage Collection</h3>
+          <p>
+            JavaScript automatically manages memory through garbage collection,
+            freeing up memory that's no longer needed.
+          </p>
+          <div class="memory-diagram">
+            <h4>Garbage Collection Process</h4>
+            <ol class="ml-2">
+              <li>
+                <strong>Mark:</strong> The engine marks all objects that are
+                reachable from root objects
+              </li>
+              <li>
+                <strong>Sweep:</strong> It clears memory occupied by unmarked
+                (unreachable) objects
+              </li>
+            </ol>
+          </div>
+          <div class="key-point">
+            <strong>Tip:</strong> To optimize garbage collection:
+            <ul>
+              <li>Avoid creating unnecessary objects</li>
+              <li>Nullify references to large objects when no longer needed</li>
+              <li>Be cautious with closures that can create memory leaks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Data Types</title>
+    <link rel="stylesheet" href="../../../styles.css" />
+    <script></script>
+  </head>
+  <body>
+    <div>
+      <h1 class="heading-large heading-primary">
+        Primitive Types vs Reference Types in JavaScript
+      </h1>
+
+      <div class="card mb-3">
+        <p>
+          JavaScript values are categorized into
+          <strong>primitive types</strong> and <strong>reference types</strong>.
+          Here's a clear breakdown with explanations and examples:
+        </p>
+      </div>
+
+      <div class="card mb-3">
+        <h2 class="heading-medium">Primitive Types</h2>
+        <p>
+          Primitive types are the most basic data types in JavaScript. They are
+          immutable and represent a single value. There are seven standard
+          primitive types:
+        </p>
+
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th>Primitive Type</th>
+              <th>Description</th>
+              <th>Example</th>
+              <th>typeof Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Number</td>
+              <td>
+                Numeric values (integers, floats, special values like NaN,
+                Infinity)
+              </td>
+              <td><code>let age = 30;</code></td>
+              <td><code>'number'</code></td>
+            </tr>
+            <tr>
+              <td>String</td>
+              <td>Sequences of characters</td>
+              <td><code>let name = "Alice";</code></td>
+              <td><code>'string'</code></td>
+            </tr>
+            <tr>
+              <td>Boolean</td>
+              <td>Logical values: <code>true</code> or <code>false</code></td>
+              <td><code>let isActive = false;</code></td>
+              <td><code>'boolean'</code></td>
+            </tr>
+            <tr>
+              <td>Null</td>
+              <td>
+                Explicitly no value (intentional absence of any object value)
+              </td>
+              <td><code>let data = null;</code></td>
+              <td><code>'object'</code> (quirk)</td>
+            </tr>
+            <tr>
+              <td>Undefined</td>
+              <td>Variable declared but not assigned a value</td>
+              <td><code>let x;</code></td>
+              <td><code>'undefined'</code></td>
+            </tr>
+            <tr>
+              <td>Symbol</td>
+              <td>Unique, immutable identifiers (ES6+)</td>
+              <td><code>let id = Symbol("id");</code></td>
+              <td><code>'symbol'</code></td>
+            </tr>
+            <tr>
+              <td>BigInt</td>
+              <td>Arbitrarily large integers (ES2020+)</td>
+              <td><code>let big = 12345678901234567890n;</code></td>
+              <td><code>'bigint'</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note mt-3">
+          <strong>Key Points:</strong>
+          <ul>
+            <li>
+              Primitives are not objects and have no methods or properties.
+            </li>
+            <li>They are compared by value.</li>
+            <li>
+              Strings behave like objects temporarily so you can use methods,
+              but are still primitives.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <h2 class="heading-medium">Reference Types</h2>
+        <p>
+          Reference types are objects. They can store multiple values and are
+          mutable.
+        </p>
+
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th>Reference Type</th>
+              <th>Description</th>
+              <th>Example</th>
+              <th>typeof Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Object</td>
+              <td>Collection of key-value pairs</td>
+              <td><code>let person = { name: "Bob" };</code></td>
+              <td><code>'object'</code></td>
+            </tr>
+            <tr>
+              <td>Array</td>
+              <td>Ordered list of values (special kind of object)</td>
+              <td><code>let nums = [1, 2, 3];</code></td>
+              <td><code>'object'</code></td>
+            </tr>
+            <tr>
+              <td>Function</td>
+              <td>Callable objects (also a type of object)</td>
+              <td><code>function greet() {}</code></td>
+              <td><code>'function'</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note mt-3">
+          <strong>Key Points:</strong>
+          <ul>
+            <li>Reference types are compared by reference (not by value).</li>
+            <li>Arrays and functions are technically objects.</li>
+            <li>Objects can have properties and methods.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <h2 class="heading-medium">Examples</h2>
+        <pre>
+// Primitive types
+let score = 100;             // Number
+let greeting = "Hello";      // String
+let isOnline = true;         // Boolean
+let nothing = null;          // Null
+let notDefined;              // Undefined
+let uniqueId = Symbol();     // Symbol
+let hugeNum = 123n;          // BigInt
+
+// Reference types
+let user = { name: "Jane" }; // Object
+let colors = ["red", "blue"]; // Array
+function sayHi() {           // Function
+  console.log("Hi!");
+}
+</pre
+        >
+      </div>
+
+      <div class="card mb-3">
+        <h2 class="heading-medium">Summary Table</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Type Category</th>
+              <th>Types Included</th>
+              <th>How Stored/Compared</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primitive</td>
+              <td>Number, String, Boolean, Null, Undefined, Symbol, BigInt</td>
+              <td>Stored by value, immutable</td>
+            </tr>
+            <tr>
+              <td>Reference</td>
+              <td>Object, Array, Function</td>
+              <td>Stored by reference, mutable</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note mt-3">
+          <strong>In short:</strong>
+          <ul>
+            <li>
+              <strong>Primitive types</strong> are the simple, immutable
+              building blocks (like numbers and strings).
+            </li>
+            <li>
+              <strong>Reference types</strong> are objects, arrays, and
+              functions—complex structures that can hold multiple values and are
+              mutable.
+            </li>
+          </ul>
+          <p>
+            This distinction is fundamental for understanding how variables
+            behave and how data is managed in JavaScript.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

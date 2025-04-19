@@ -1,0 +1,47 @@
+/* Background effects */
+.background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: linear-gradient(
+    135deg,
+    rgba(252, 252, 252, 1) 0%,
+    rgba(240, 243, 252, 1) 100%
+  );
+}
+
+.gradient-circles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gradient-circle {
+  position: absolute;
+  border-radius: 80%;
+  filter: blur(90px);
+}
+
+.circle-1 {
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(45, 156, 219, 0.08);
+}
+
+.circle-2 {
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(45, 156, 219, 0.08);
+}

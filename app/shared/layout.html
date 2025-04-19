@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Learning Path</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <script>
+      // Function to load and insert shared navigation
+      async function loadNav() {
+        try {
+          const response = await fetch('./nav.html');
+          const navHtml = await response.text();
+          document.getElementById('nav-placeholder').innerHTML = navHtml;
+        } catch (error) {
+          console.error('Error loading navigation:', error);
+        }
+      }
+
+      // Function to load content based on URL parameter
+      async function loadContent() {
+        try {
+          // Get the content path from URL parameter or use default
+          const urlParams = new URLSearchParams(window.location.search);
+          const contentPath =
+            urlParams.get('content') || '../learn-js/home.html';
+
+          const response = await fetch(contentPath);
+          const contentHtml = await response.text();
+          document.getElementById('content-placeholder').innerHTML =
+            contentHtml;
+
+          // Hide back buttons if home page is loaded
+          const backButtons = document.querySelectorAll('.back-button');
+          if (contentPath.includes('home.html')) {
+            backButtons.forEach((button) => (button.style.display = 'none'));
+          } else {
+            backButtons.forEach((button) => (button.style.display = 'flex'));
+          }
+
+          // Extract and execute scripts
+          const scriptTags = contentHtml.match(
+            /<script[^>]*>([\s\S]*?)<\/script>/g
+          );
+          if (scriptTags) {
+            scriptTags.forEach((scriptTag) => {
+              // Extract src if it's an external script
+              const srcMatch = scriptTag.match(/src=["']([^"']+)["']/);
+              if (srcMatch) {
+                const scriptSrc = srcMatch[1];
+                // Get base directory from contentPath
+                const basePath = contentPath.substring(
+                  0,
+                  contentPath.lastIndexOf('/') + 1
+                );
+                const absoluteSrc = new URL(
+                  scriptSrc,
+                  new URL(basePath, window.location.href)
+                ).href;
+
+                // Create and append script
+                const script = document.createElement('script');
+                script.src = absoluteSrc;
+                document.body.appendChild(script);
+              } else {
+                // For inline scripts, extract and execute the content
+                const scriptContent = scriptTag.replace(
+                  /<script[^>]*>|<\/script>/g,
+                  ''
+                );
+                if (scriptContent.trim()) {
+                  const script = document.createElement('script');
+                  script.textContent = scriptContent;
+                  document.body.appendChild(script);
+                }
+              }
+            });
+          }
+
+          // Additional handling for execution-model.js
+          if (contentPath.includes('execution-model')) {
+            console.log('Loading execution model scripts');
+            // Create global functions for button handlers if needed
+            if (typeof window.startVisualization !== 'function') {
+              window.startVisualization = function () {
+                console.log('Button clicked - loading visualization functions');
+                // Try to call the function from the loaded script
+                if (typeof startVisualization === 'function') {
+                  startVisualization();
+                }
+              };
+
+              window.nextStep = function () {
+                if (typeof nextStep === 'function') {
+                  nextStep();
+                }
+              };
+
+              window.resetVisualization = function () {
+                if (typeof resetVisualization === 'function') {
+                  resetVisualization();
+                }
+              };
+            }
+          }
+
+          // Update page title if available
+          const titleMatch = contentHtml.match(/<title>(.*?)<\/title>/);
+          if (titleMatch && titleMatch[1]) {
+            document.title = titleMatch[1] + ' - JavaScript Learning Path';
+          }
+        } catch (error) {
+          console.error('Error loading content:', error);
+          document.getElementById('content-placeholder').innerHTML =
+            '<p>Error loading content. Please try again.</p>';
+        }
+      }
+
+      // Load navigation and content when DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        loadNav();
+        loadContent();
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Background effects -->
+    <!-- <div class="background-gradient"></div>
+    <div class="gradient-circles">
+      <div class="gradient-circle circle-1"></div>
+      <div class="gradient-circle circle-2"></div>
+    </div> -->
+
+    <!-- Placeholder for shared navigation -->
+    <div id="nav-placeholder" class="fixed-nav"></div>
+
+    <div class="layout-container">
+      <a
+        href="layout.html?content=../learn-js/home.html"
+        class="back-button"
+      ></a>
+      <!-- Content will be loaded here -->
+      <div id="content-placeholder"></div>
+      <a
+        href="layout.html?content=../learn-js/home.html"
+        class="back-button"
+      ></a>
+    </div>
+
+    <footer class="page-footer">
+      <p class="text-secondary">
+        JavaScript Learning Path | Created for educational purposes by
+        <a
+          href="https://www.linkedin.com/in/raviteja-kedar/"
+          target="_blank"
+          class="footer-link"
+          >Kedar</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>

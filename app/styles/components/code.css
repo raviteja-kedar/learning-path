@@ -1,0 +1,37 @@
+/* Code styles */
+code,
+.code-example {
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  background-color: var(--code-background);
+  color: var(--code-text-color);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--code-background);
+  color: var(--code-text-color);
+  border-radius: 6px;
+  padding: 15px;
+  overflow-x: auto;
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 1.5em;
+}
+
+.code-container {
+  background-color: var(--code-background);
+  color: var(--code-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}

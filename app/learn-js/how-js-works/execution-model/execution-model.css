@@ -1,0 +1,119 @@
+/* Execution Model Visualization Styles */
+
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  gap: 10px;
+}
+
+.visualization-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 10px;
+  max-height: fit-content;
+}
+
+.code-container {
+  min-width: 320px;
+}
+
+.boxes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  height: 100%;
+  max-height: 100%;
+}
+
+.box {
+  border: 2px solid #333;
+  padding: 6px;
+  border-radius: 5px;
+  position: relative;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.box h3 {
+  margin-top: 0;
+  text-align: center;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  font-size: 14px;
+}
+
+.item {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 4px;
+  margin: 2px 0;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+#call-stack .item {
+  background-color: #ffeeee;
+  border: 1px solid #ffcccc;
+}
+
+#web-apis .item {
+  background-color: #eeffee;
+  border: 1px solid #ccffcc;
+}
+
+#callback-queue .item {
+  background-color: #eeeeff;
+  border: 1px solid #ccccff;
+}
+
+#microtask-queue .item {
+  background-color: #ffffee;
+  border: 1px solid #ffffcc;
+}
+
+#output {
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: monospace;
+  overflow-y: auto;
+  font-size: 11px;
+  height: 100%;
+}
+
+.highlight {
+  background-color: yellow;
+  display: inline-block;
+  width: 100%;
+  color: black;
+}
+
+.explanation-current {
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 5px;
+  background-color: #ffe;
+  border: 1px solid #dda;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* Responsive design for visualization */
+@media (max-width: 1200px) {
+  .visualization-container {
+    grid-template-columns: 1fr;
+  }
+  .code-container,
+  #output,
+  .boxes-grid {
+    height: 300px;
+  }
+}

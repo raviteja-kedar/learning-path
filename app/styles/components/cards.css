@@ -1,0 +1,58 @@
+/* Cards */
+.card {
+  background: var(--card-background);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  height: 100%;
+  min-width: fit-content;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Note panels */
+.note,
+.warning,
+.tip {
+  border-left: 4px solid;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+}
+
+.note {
+  background-color: #f0f7ff;
+  border-color: var(--primary-color);
+  color: var(--secondary-text);
+}
+
+.key-point {
+  background: #fffaed;
+  border-left: 4px solid var(--accent-yellow);
+  padding: 10px 15px;
+  margin: 15px 0;
+}
+
+.memory-diagram {
+  background: #f1f8ff;
+  border: 1px dashed var(--accent-color);
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.warning {
+  background-color: #fff5f5;
+  border-color: #e74c3c;
+}
+
+.tip {
+  background-color: #f0fff4;
+  border-color: #2ecc71;
+}
